@@ -1,6 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
-import * as THREE from 'three';
-// Suppress missing type declarations for side-effect CSS import
+import React, { useEffect, useState } from 'react';
 // @ts-ignore TS7016: Could not find a declaration file for module './global.css'.
 import './global.css';
 
@@ -21,6 +19,7 @@ const Navbar: React.FC = () => (
         <a className="nav-link nav-link-active" href="#">Início</a>
         <a className="nav-link" href="#problema">Sobre</a>
         <a className="nav-link" href="#solucao">Solução</a>
+        <a className="nav-link" href="#funcionalidades">Funcionalidades</a>
         <a className="nav-link" href="#telas">Telas</a>
         <a className="nav-link" href="#impacto">Impacto</a>
       </div>
@@ -29,93 +28,31 @@ const Navbar: React.FC = () => (
 );
 
 const HeroSection: React.FC = () => {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: false });
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
-
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-    camera.position.z = 20;
-
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
-    scene.add(ambientLight);
-    const pointLight = new THREE.PointLight(0xffffff, 0.8);
-    pointLight.position.set(10, 10, 10);
-    scene.add(pointLight);
-
-    const baseGeo = new THREE.CylinderGeometry(1, 1.2, 0.5, 16);
-    const bodyGeo = new THREE.CylinderGeometry(0.6, 0.8, 3, 16);
-    const headGeo = new THREE.SphereGeometry(0.8, 16, 12);
-
-    const matPrimary = new THREE.MeshStandardMaterial({ color: 0xC32428, roughness: 0.3, metalness: 0.1 });
-    const matSecondary = new THREE.MeshStandardMaterial({ color: 0x6C4C23, roughness: 0.3, metalness: 0.1 });
-
-    const pieces: { mesh: THREE.Group; speed: number; rotSpeed: number; offset: number }[] = [];
-    const pieceCount = 6;
-
-    for (let i = 0; i < pieceCount; i++) {
-      const piece = new THREE.Group();
-      const base = new THREE.Mesh(baseGeo, i % 2 === 0 ? matPrimary : matSecondary);
-      const body = new THREE.Mesh(bodyGeo, i % 2 === 0 ? matPrimary : matSecondary);
-      const head = new THREE.Mesh(headGeo, i % 2 === 0 ? matPrimary : matSecondary);
-      body.position.y = 1.75;
-      head.position.y = 3.5;
-      piece.add(base);
-      piece.add(body);
-      piece.add(head);
-      piece.position.set((Math.random() - 0.5) * 40, (Math.random() - 0.5) * 30, (Math.random() - 0.5) * 10);
-      piece.rotation.set(Math.random() * Math.PI, Math.random() * Math.PI, 0);
-      const speed = 0.005 + Math.random() * 0.01;
-      const rotSpeed = 0.002 + Math.random() * 0.005;
-      pieces.push({ mesh: piece, speed, rotSpeed, offset: Math.random() * 100 });
-      scene.add(piece);
-    }
-
-    function resize() {
-      if (!canvas) return;
-      const width = canvas.clientWidth;
-      const height = canvas.clientHeight;
-      if (canvas.width !== width || canvas.height !== height) {
-        renderer.setSize(width, height, false);
-        camera.aspect = width / height;
-        camera.updateProjectionMatrix();
-      }
-    }
-
-    function animate(time: number) {
-      requestAnimationFrame(animate);
-      resize();
-      const t = time * 0.001;
-      pieces.forEach(p => {
-        p.mesh.position.y += Math.sin(t + p.offset) * 0.02;
-        p.mesh.rotation.y += p.rotSpeed;
-        p.mesh.rotation.x += p.rotSpeed * 0.5;
-      });
-      renderer.render(scene, camera);
-    }
-    requestAnimationFrame(animate);
-    window.addEventListener('resize', resize);
-
-    return () => {
-      window.removeEventListener('resize', resize);
-      renderer.dispose();
-    };
-  }, []);
-
   return (
     <section className="relative overflow-hidden" style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', paddingTop: '80px' }}>
-      <canvas ref={canvasRef} className="opacity-30" id="hero-canvas" />
+      {/* Fundo com peças vermelhas bem visíveis e tabuleiro castanho */}
+      <div className="absolute inset-0" style={{ zIndex: 0 }}>
+        <img
+          src="https://images.unsplash.com/photo-1611996575749-79b5a2e4d8c0?w=1200&q=80"
+          alt="Tabuleiro de xadrez com peças vermelhas e castanhas"
+          className="w-full h-full object-cover"
+          style={{ filter: 'brightness(1.1) saturate(1.2)' }}
+        />
+        {/* Overlay muito leve para não esconder o vermelho */}
+        <div
+          className="absolute inset-0"
+          style={{
+            background: 'linear-gradient(135deg, rgba(255,255,255,0.15) 0%, rgba(245,235,220,0.3) 100%)',
+          }}
+        ></div>
+      </div>
       <div className="container relative hero-grid" style={{ zIndex: 10 }}>
         <div className="space-y-md">
           <div className="badge">
             <span className="material-symbols-outlined" style={{ fontSize: '18px' }}>verified</span>
             <span>Inovação Nacional</span>
           </div>
-          <h1 className="h1-mobile h1-responsive leading-tight">
+          <h1 className="h1-mobile h1-responsive leading-tight text-primary">
             SISTEMA INTEGRADO DE FILIAÇÃO E CONTROLO DE QUOTAS
           </h1>
           <p className="body-lg text-on-surface-variant max-w-xl">
@@ -235,6 +172,42 @@ const SolutionSection: React.FC = () => (
   </section>
 );
 
+const FeaturesSection: React.FC = () => {
+  const features = [
+    { icon: 'account_balance', title: 'Gestão da Federação', desc: 'Controlo total sobre atletas, clubes e competições nacionais.' },
+    { icon: 'groups', title: 'Gestão de Associações', desc: 'Cadastro e administração de associações provinciais e distritais.' },
+    { icon: 'payments', title: 'Pagamento de Quotas', desc: 'Monitorização de quotas com alertas e recibos automáticos.' },
+    { icon: 'swap_horiz', title: 'Transferência de Jogadores', desc: 'Processo simplificado de transferências entre clubes.' },
+    { icon: 'campaign', title: 'Comunicação Interna', desc: 'Mensagens e notificações entre federação, associações e atletas.' },
+    { icon: 'description', title: 'Relatórios Avançados', desc: 'Geração de estatísticas por província, idade e desempenho.' },
+  ];
+
+  return (
+    <section className="py-xl bg-surface-container-low" id="funcionalidades">
+      <div className="container">
+        <div className="text-center mb-lg reveal">
+          <h2 className="h2 mb-xs">FUNCIONALIDADES PRINCIPAIS</h2>
+          <div className="divider"></div>
+          <p className="mt-md body-lg text-on-surface-variant">Tudo o que precisa para gerir o xadrez nacional</p>
+        </div>
+        <div className="grid grid-lg-2 gap-gutter">
+          {features.map((f, idx) => (
+            <div key={idx} className="glass-card p-md rounded-xl flex items-center gap-md reveal" style={{ transitionDelay: `${idx * 100}ms` }}>
+              <div className="w-16 h-16 rounded-full bg-primary-light flex items-center justify-center shrink-0">
+                <span className="material-symbols-outlined text-primary" style={{ fontSize: '28px' }}>{f.icon}</span>
+              </div>
+              <div>
+                <h4 className="h3 mb-xs">{f.title}</h4>
+                <p className="caption text-on-surface-variant">{f.desc}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
 const ScreenshotsSection: React.FC = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [modalOpen, setModalOpen] = useState(false);
@@ -284,7 +257,6 @@ const ScreenshotsSection: React.FC = () => {
   const openModal = () => setModalOpen(true);
   const closeModal = () => setModalOpen(false);
 
-  // Fecha o modal ao pressionar a tecla Escape
   useEffect(() => {
     const handleEsc = (e: KeyboardEvent) => {
       if (e.key === 'Escape') closeModal();
@@ -340,7 +312,6 @@ const ScreenshotsSection: React.FC = () => {
         </div>
       </div>
 
-      {/* MODAL DE VISUALIZAÇÃO AMPLIADA */}
       {modalOpen && (
         <div className="modal-overlay" onClick={closeModal}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
@@ -461,6 +432,67 @@ const RoadmapSection: React.FC = () => {
   );
 };
 
+const TeamSection: React.FC = () => {
+  const members = [
+    { name: 'Ester Melina Elias Mapaco', role: 'Desenvolvedora Full‑Stack & Product Owner' },
+    { name: 'Génio Nassone Cossa', role: 'Desenvolvedor Full‑Stack & Arquitecto de Sistemas' },
+    { name: 'Virgílio Pavia Gomes', role: 'Desenvolvedor Back‑end & Especialista em Bases de Dados' },
+  ];
+
+  return (
+    <section className="py-xl bg-surface-container-low" id="equipa">
+      <div className="container">
+        <div className="text-center mb-lg reveal">
+          <h2 className="h2 mb-xs">EQUIPA DO PROJECTO</h2>
+          <div className="divider"></div>
+          <p className="mt-md body-lg text-on-surface-variant">Conheça os responsáveis pelo desenvolvimento do sistema</p>
+        </div>
+
+        <div className="grid grid-md-3 gap-gutter mb-xl reveal">
+          {members.map((m, idx) => (
+            <div key={idx} className="glass-card p-md rounded-2xl text-center" style={{ transitionDelay: `${idx * 100}ms` }}>
+              <div className="w-24 h-24 rounded-full bg-primary-light flex items-center justify-center mx-auto mb-md">
+                <span className="material-symbols-outlined text-primary" style={{ fontSize: '48px' }}>person</span>
+              </div>
+              <h4 className="h3 mb-xs">{m.name}</h4>
+              <p className="caption text-on-surface-variant">{m.role}</p>
+            </div>
+          ))}
+        </div>
+
+        <div className="glass-card p-lg rounded-2xl reveal">
+          <div className="flex flex-col lg:flex-row gap-lg items-center">
+            <div className="lg:w-1/2 space-y-sm">
+              <div className="flex items-center gap-sm">
+                <span className="material-symbols-outlined text-primary">school</span>
+                <span className="label-md text-primary uppercase">Contexto Académico</span>
+              </div>
+              <p className="body-md text-on-surface-variant">
+                Projecto desenvolvido no âmbito do 4.º ano da Licenciatura em Informática, Minor em Desenvolvimento de Sistemas, pela <strong>Universidade Pedagógica de Maputo</strong>.
+              </p>
+              <p className="body-md text-on-surface-variant">
+                O sistema aplica conceitos avançados de engenharia de software, com foco na escalabilidade, segurança e usabilidade.
+              </p>
+            </div>
+            <div className="lg:w-1/2 space-y-sm">
+              <div className="flex items-center gap-sm">
+                <span className="material-symbols-outlined text-primary">memory</span>
+                <span className="label-md text-primary uppercase">Tecnologias Utilizadas</span>
+              </div>
+              <div className="flex flex-wrap gap-sm">
+                {['React', 'Laravel', 'CSS Puro', 'PostgreSQL', 'Redis', 'Linux'].map(tech => (
+                  <span key={tech} className="px-md py-xs bg-primary-light text-primary rounded-full caption font-bold">{tech}</span>
+                ))}
+              </div>
+              <p className="caption text-on-surface-variant mt-sm">Além das tecnologias principais, foram utilizadas bibliotecas como Three.js, Material Symbols e boas práticas de acessibilidade.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
 const Footer: React.FC = () => (
   <footer className="bg-surface-container-low w-full py-lg mt-xl border-t border-outline-variant-30">
     <div className="container">
@@ -533,10 +565,12 @@ const App: React.FC = () => {
         <HeroSection />
         <ProblemSection />
         <SolutionSection />
+        <FeaturesSection />
         <ScreenshotsSection />
         <ImpactSection />
         <ArchitectureSection />
         <RoadmapSection />
+        <TeamSection />
       </main>
       <Footer />
     </div>
