@@ -1,5 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
+// Suppress missing type declarations for side-effect CSS import
+// @ts-ignore TS7016: Could not find a declaration file for module './global.css'.
 import './global.css';
 
 // ---------- Componentes Internos ----------
@@ -120,10 +122,15 @@ const HeroSection: React.FC = () => {
             Modernizando a gestão do xadrez federado em Moçambique com transparência, eficiência e dados centralizados para o crescimento estratégico do desporto.
           </p>
           <div className="flex flex-wrap gap-md" style={{ paddingTop: '8px' }}>
-            <button className="btn-primary">Ver Documentação</button>
+            <button
+              className="btn-primary"
+              onClick={() => window.open("https://github.com/EsterMelina/SIFCQA-da-FMX/tree/main/docs", "_blank")}
+            >
+              Ver Documentação
+            </button>
             <a
               className="btn-glass"
-              href="https://github.com/seu-usuario/seu-repositorio"
+              href="https://github.com/EsterMelina/SIFCQA-da-FMX"
               target="_blank"
               rel="noopener noreferrer"
             >
