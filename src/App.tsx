@@ -63,7 +63,7 @@ const HeroSection: React.FC = () => {
               className="btn-primary"
               onClick={() => window.open("https://github.com/EsterMelina/SIFCQA-da-FMX/tree/main/docs", "_blank")}
             >
-              Ver Documentação
+             Documentação
             </button>
             <a
               className="btn-glass"
