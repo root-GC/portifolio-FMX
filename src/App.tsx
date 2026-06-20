@@ -13,7 +13,7 @@ const Navbar: React.FC = () => (
           className="navbar-logo"
           src="/assets/fmx-logo.png"
         />
-        <span className="navbar-title">Portifólio</span>
+        <span className="navbar-title">Portfólio</span>
       </div>
       <div className="navbar-links">
         <a className="nav-link nav-link-active" href="#">Início</a>
