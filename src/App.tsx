@@ -174,11 +174,11 @@ const SolutionSection: React.FC = () => (
 
 const FeaturesSection: React.FC = () => {
   const features = [
-    { icon: 'account_balance', title: 'Gestão da Federação', desc: 'Controlo total sobre atletas, clubes e competições nacionais.' },
-    { icon: 'groups', title: 'Gestão de Associações', desc: 'Cadastro e administração de associações provinciais e distritais.' },
+    { icon: 'account_balance', title: 'Gestão da Federação', desc: 'Controlo total sobre jogadores e competições nacionais.' },
+    { icon: 'groups', title: 'Gestão de Associações', desc: 'Cadastro e administração de associações provinciais.' },
     { icon: 'payments', title: 'Pagamento de Quotas', desc: 'Monitorização de quotas com alertas e recibos automáticos.' },
-    { icon: 'swap_horiz', title: 'Transferência de Jogadores', desc: 'Processo simplificado de transferências entre clubes.' },
-    { icon: 'campaign', title: 'Comunicação Interna', desc: 'Mensagens e notificações entre federação, associações e atletas.' },
+    { icon: 'swap_horiz', title: 'Transferência de Jogadores', desc: 'Processo simplificado de transferências entre associações.' },
+    { icon: 'campaign', title: 'Comunicação Interna', desc: 'Mensagens e notificações entre federação, associações e jogadores.' },
     { icon: 'description', title: 'Relatórios Avançados', desc: 'Geração de estatísticas por província, idade e desempenho.' },
   ];
 
@@ -212,44 +212,44 @@ const ScreenshotsSection: React.FC = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [modalOpen, setModalOpen] = useState(false);
 
-  const slides = [
-    {
-      image: '/assets/login.jpg',
-      title: 'Autenticação Segura',
-      desc: 'Acesso controlado para jogadores, associações e administradores do sistema.',
-      gradient: 'slide-gradient-1',
-    },
-    {
-      image: '/assets/admin.jpg',
-      title: 'Painel da Federação',
-      desc: 'Visão centralizada com métricas, gráficos e gestão de utilizadores.',
-      gradient: 'slide-gradient-2',
-    },
-    {
-      image: '/assets/fmx.jpg',
-      title: 'Sistema Integrado FMX',
-      desc: 'Plataforma unificada para gestão de filiações, quotas e comunicação.',
-      gradient: 'slide-gradient-3',
-    },
-    {
-      image: '/assets/association1.jpg',
-      title: 'Gestão de Associações',
-      desc: 'Cadastro de associações provinciais e clubes filiados.',
-      gradient: 'slide-gradient-1',
-    },
-    {
-      image: '/assets/association2.jpg',
-      title: 'Controlo Financeiro',
-      desc: 'Monitorização de quotas e regularidade dos pagamentos por associação.',
-      gradient: 'slide-gradient-2',
-    },
-    {
-      image: '/assets/jogador.jpg',
-      title: 'Ficha do Atleta',
-      desc: 'Registo completo com histórico de competições e status de filiação.',
-      gradient: 'slide-gradient-3',
-    },
-  ];
+const slides = [
+  {
+    image: '/assets/login.jpg',
+    title: 'Autenticação Segura',
+    desc: 'Acesso controlado para jogadores, associações e administradores do sistema.',
+    gradient: 'slide-gradient-1',
+  },
+  {
+    image: '/assets/admin.jpg',
+    title: 'Painel do Administrador',
+    desc: 'Visão centralizada com métricas do funcionamento do sistema.',
+    gradient: 'slide-gradient-2',
+  },
+  {
+    image: '/assets/fmx.jpg',
+    title: 'Gestão da Federação',
+    desc: 'Criação de associações, staff da federação e relatórios estatísticos.',
+    gradient: 'slide-gradient-3',
+  },
+  {
+    image: '/assets/association1.jpg',
+    title: 'Gestão de Associações',
+    desc: 'Relatórios estatísticos das actividades da associação.',
+    gradient: 'slide-gradient-1',
+  },
+  {
+    image: '/assets/association2.jpg',
+    title: 'Menu da Associação',
+    desc: 'Dados preliminares das actividades na associação.',
+    gradient: 'slide-gradient-2',
+  },
+  {
+    image: '/assets/jogador.jpg',
+    title: 'Ficha do Atleta',
+    desc: 'Registo completo com histórico de competições e status de filiação.',
+    gradient: 'slide-gradient-3',
+  },
+];
 
   const next = () => setCurrentSlide((prev) => (prev + 1) % slides.length);
   const prev = () => setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
@@ -499,21 +499,20 @@ const Footer: React.FC = () => (
       <div className="footer-grid mb-lg">
         <div className="space-y-sm">
           <div className="flex items-center gap-xs">
-            {/* <img alt="Logo" className="h-10 w-10" src="/assets/fmx-logo.png" /> */}
-            <span className="h3 text-primary">FMX</span>
+            <img alt="Logo FMX" className="h-20 w-20 object-contain" src="/assets/fmx-logo.png" />
           </div>
           <p className="caption text-on-surface-variant leading-relaxed">
-            Sistema oficial de gestão da Federação Moçambicana de Xadrez. Excelência em cada movimento.
+            Promovemos e regulamentamos o xadrez moçambicano, visando a criação e a manutenção de futuros campeões.
           </p>
         </div>
-        <div className="space-y-sm">
+        {/* <div className="space-y-sm">
           <h4 className="label-md text-primary uppercase">Equipa Técnica</h4>
           <ul className="space-y-xs caption text-on-surface-variant">
             <li>Ester Melina Elias Mapaco</li>
             <li>Génio Nassone Cossa</li>
             <li>Virgílio Pavia Gomes</li>
           </ul>
-        </div>
+        </div> */}
         <div className="space-y-sm">
           <h4 className="label-md text-primary uppercase">Ligações Rápidas</h4>
           <ul className="space-y-xs caption text-on-surface-variant">
@@ -526,15 +525,15 @@ const Footer: React.FC = () => (
         <div className="space-y-sm">
           <h4 className="label-md text-primary uppercase">Contacto</h4>
           <p className="caption text-on-surface-variant">
-            Av. Samora Machel, Maputo<br />
-            info@fmxadrez.org.mz<br />
-            +258 21 000 000
+            Av. Emilia Dausse 530, Maputo<br />
+            Moçambique 1100<br />
+            <a href="https://linktr.ee/federacaomocambicanadexadrez" target="_blank" rel="noopener noreferrer" className="text-primary underline">linktr.ee/federacaomocambicanadexadrez</a>
           </p>
         </div>
       </div>
       <div className="pt-md border-t border-outline-variant-30 text-center">
         <p className="caption text-on-surface-variant opacity-80">
-          © 2026 Federação Moçambicana de Xadrez. Promovendo xeques-mates.
+          © 2026 Federação Moçambicana de Xadrez. Promovendo xeques‑mates.
         </p>
       </div>
     </div>
