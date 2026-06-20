@@ -61,7 +61,7 @@ const HeroSection: React.FC = () => {
           <div className="flex flex-wrap gap-md" style={{ paddingTop: '8px' }}>
             <button
               className="btn-primary"
-              onClick={() => window.open("https://github.com/EsterMelina/SIFCQA-da-FMX/tree/minha-branch/docs/Documento%20do%20Projecto", "_blank")}
+              onClick={() => window.open("https://docs.google.com/document/d/1sgE088NtsW6iK0AqycMhERZ0n3o0Q7Z0/edit?usp=sharing&ouid=117226666448147640773&rtpof=true&sd=true", "_blank")}
             >
              Documentação
             </button>
